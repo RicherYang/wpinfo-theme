@@ -1,0 +1,14 @@
+{
+	"version": 3,
+	"file": "block-editor.css",
+	"sources": [
+		"../../scss/block-editor.scss",
+		"../../scss/lib/_var.scss"
+	],
+	"sourcesContent": [
+		"@import \"lib/var\";\r\n\r\n.wp-block {\r\n    max-width: 610px;\r\n    font-size: $basic-font-size;\r\n    font-weight: $basic-font-weight;\r\n}\r\n",
+		"@function nice-rem($size) {\r\n    $remSize: round($size * $basic-font-size) / ($basic-font-size);\r\n    @return #{$remSize}rem;\r\n}\r\n\r\n$basic-font-size: 17px;\r\n$basic-font-weight: 400;\r\n$basic-line-height: 1.6;\r\n\r\n$basic-border-radius: nice-rem(.25);\r\n\r\n$colors: (\r\n    border: #bbc1c7,\r\n    btn-bg: #e9ecef,\r\n\r\n    link: #3641d8,\r\n    link-hover: #8f94e2\r\n);\r\n\r\n$titleFontFamily: 'Noto Sans', 'Noto Sans TC', sans-serif;\r\n\r\n\r\n"
+	],
+	"names": [],
+	"mappings": ";AAEA,AAAA,SAAS,CAAC;EACN,SAAS,EAAE,KAAK;EAChB,SAAS,ECCK,IAAI;EDAlB,WAAW,ECCK,GAAG;CDAtB"
+}

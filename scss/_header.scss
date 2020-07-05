@@ -1,0 +1,13 @@
+#header-menu {
+    padding: 1rem nice-rem(1.5);
+    border-bottom: 1px solid map-get($colors, border);
+
+    .menu-item {
+        display: inline-block;
+        padding-right: nice-rem(.5);
+
+        &:last-of-type {
+            padding-right: 0;
+        }
+    }
+}

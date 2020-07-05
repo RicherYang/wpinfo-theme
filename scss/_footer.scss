@@ -1,0 +1,6 @@
+.powered-by-wordpress {
+    text-align: center;
+    font-size: nice-rem(.7);
+
+    color: lighten(map-get($colors, word), 20%);
+}

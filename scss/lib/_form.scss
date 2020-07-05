@@ -1,0 +1,49 @@
+input, button {
+    padding: $input-padding-x $input-padding-y;
+    border: 1px solid map-get($colors, border);
+}
+
+[type="submit"], button {
+    &:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
+button {
+    display: inline-block;
+    background-color: map-get($colors, btn-bg);
+    border-radius: $basic-border-radius;
+    margin-left: $input-padding-y;
+
+    &:hover {
+        background-color: darken(map-get($colors, btn-bg), 5%);
+    }
+}
+
+label {
+    display: inline-block;
+    padding-right: $input-padding-y;
+}
+
+.input {
+    border-radius: $basic-border-radius;
+}
+
+.input-box {
+    display: inline-flex;
+
+    .input-box-prev {
+        flex: 0 0 auto;
+        padding: $input-padding-x $input-padding-y;
+        border: 1px solid map-get($colors, border);
+        border-right-width: 0;
+        background-color: map-get($colors, btn-bg);
+        border-top-left-radius: $basic-border-radius;
+        border-bottom-left-radius: $basic-border-radius;
+    }
+
+    .input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

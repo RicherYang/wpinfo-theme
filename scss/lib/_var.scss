@@ -1,0 +1,27 @@
+@function nice-rem($size) {
+    $remSize: round($size * $basic-font-size) / ($basic-font-size);
+    @return #{$remSize}rem;
+}
+
+$basic-font-size: 17px;
+$basic-font-weight: 400;
+$basic-line-height: 1.6;
+
+$basic-border-radius: nice-rem(.25);
+
+$input-padding-x: nice-rem(.35);
+$input-padding-y: nice-rem(.65);
+
+$colors: (
+    word: #24292e,
+
+    border: #bbc1c7,
+    btn-bg: #e9ecef,
+
+    link: #3641d8,
+    link-hover: #8f94e2
+);
+
+$titleFontFamily: 'Noto Sans', 'Noto Sans TC', sans-serif;
+
+
