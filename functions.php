@@ -1,5 +1,4 @@
 <?php
-
 add_action('after_setup_theme', 'wpi_theme_support');
 function wpi_theme_support()
 {
@@ -52,4 +51,20 @@ function wei_navigation_markup_template($template)
     </nav>';
 
     return $template;
+}
+
+function the_post_meta($post_id, $key)
+{
+    echo get_post_meta($post_id, $key, true);
+}
+
+function the_post_list($list)
+{
+    $list = array_unique($list);
+    sort($list);
+    foreach ($list as &$theme) {
+        $theme = get_post($theme);
+        $theme = sprintf('<a href="%s">%s</a>', esc_url(get_permalink($theme)), get_the_title($theme));
+    }
+    echo implode(' , ', $list);
 }

@@ -21,10 +21,6 @@
     }
 }
 
-.site {
-    margin-bottom: nice-rem(1.5);
-}
-
 .pagination {
     margin-top: 1rem;
 
@@ -50,11 +46,12 @@
     color: lighten(map-get($colors, word), 20%);
 }
 
-.over-home {
+.over-home,
+.over-link-website {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
-    > div {
+    .website  {
         padding: 0 nice-rem(.5);
     }
 }

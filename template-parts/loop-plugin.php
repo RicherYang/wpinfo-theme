@@ -1,10 +1,6 @@
-<?php
-global $term;
-?>
-
-<article>
-    <h2 class="entry-title"><a href="<?=esc_url(get_term_link($term)) ?>"><?=$term->name ?></a></h2>
+<article <?php post_class(); ?>>
+    <?php the_title('<h2 class="entry-title"><a href="' . esc_url(get_permalink()) . '">', '</a></h2>'); ?>
     <p>
-        目前使用的網站數：<?=$term->count ?>
+        使用網站數：<?php the_post_meta(get_the_ID(), 'used_count'); ?>
     </p>
 </article>
