@@ -35,10 +35,9 @@ h3 {
     font-size: nice-rem(1.3);
 }
 
-input, button {
+input, button, select {
     font-size: $basic-font-size;
     line-height: $basic-line-height;
-    vertical-align: top;
     font-weight: $basic-font-weight;
 }
 

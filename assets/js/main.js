@@ -1,5 +1,14 @@
 'use strict';
 
+
+jQuery(function ($) {
+
+    $('select#order').on('change', function () {
+        window.location = $(this).data('url') + '?order=' + $(this).val();
+    });
+
+});
+
 function sendApi(args) {
     $.ajax($.extend({
         dataType: 'json',

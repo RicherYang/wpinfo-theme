@@ -3,6 +3,10 @@
 <main id="site-content">
     <?php
     if (have_posts()) {
+        if( is_post_type_archive()) {
+            get_template_part('template-parts/header', get_post_type());
+        }
+
         while (have_posts()) {
             the_post();
 

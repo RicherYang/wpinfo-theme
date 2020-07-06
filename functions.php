@@ -21,6 +21,8 @@ function wpi_register_styles()
     wp_register_script('wpi-script', get_stylesheet_directory_uri() . '/assets/js/main.js', ['jquery'], $version, true);
     wp_register_script('wpi-create-script', get_stylesheet_directory_uri() . '/assets/js/create.js', ['wpi-script'], $version, true);
 
+    wp_enqueue_script('wpi-script');
+
     wp_localize_script('wpi-create-script', 'ajaxInfo', [
         'url' => rest_url('wei/v1/site')
     ]);
@@ -51,6 +53,30 @@ function wei_navigation_markup_template($template)
     </nav>';
 
     return $template;
+}
+
+add_action('pre_get_posts', 'wei_custom_query');
+function wei_custom_query($query)
+{
+    if (!is_admin()) {
+        if ($query->is_main_query() && $query->is_post_type_archive(['plugin', 'theme'])) {
+            if (!isset($_GET['order'])) {
+                $_GET['order'] = 'count';
+            }
+            $_GET['order'] = wp_unslash($_GET['order']);
+            switch ($_GET['order']) {
+                case 'count':
+                    $query->set('meta_key', 'used_count');
+                    $query->set('orderby', 'meta_value_num');
+                    $query->set('order', 'DESC');
+                    break;
+                case 'name':
+                    $query->set('orderby', 'title');
+                    $query->set('order', 'ASC');
+                    break;
+            }
+        }
+    }
 }
 
 function the_post_meta($post_id, $key)

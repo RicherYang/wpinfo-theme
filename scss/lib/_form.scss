@@ -1,4 +1,4 @@
-input, button {
+input, button, select {
     padding: $input-padding-x $input-padding-y;
     border: 1px solid map-get($colors, border);
 }

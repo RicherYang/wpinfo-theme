@@ -48,10 +48,16 @@
 
 .over-home,
 .over-link-website {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    column-count: 3;
 
     .website  {
+        break-inside: avoid;
         padding: 0 nice-rem(.5);
+    }
+}
+
+.over-home {
+    > div {
+        break-inside: avoid;
     }
 }
