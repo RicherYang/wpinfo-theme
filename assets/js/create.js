@@ -9,6 +9,7 @@ jQuery(function ($) {
         sendApi({
             url: ajaxInfo.url + '/check_url',
             data: data,
+            method: 'POST',
             success: function (Jdata) {
                 if (Jdata.url !== undefined) {
                     window.location = Jdata.url;

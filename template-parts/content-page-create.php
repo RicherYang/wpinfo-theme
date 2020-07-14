@@ -11,6 +11,7 @@
 
         <p class="confirming url-info d-none">系統抓取資訊中，請耐心等待！</p>
         <p class="error_url url-info d-none">錯誤的網址！</p>
+        <?php wp_nonce_field('wp_rest', '_wpnonce', false) ?>
     </fieldset>
 
     <div class="entry-content">
