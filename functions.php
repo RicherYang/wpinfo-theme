@@ -86,7 +86,7 @@ function the_post_meta($post_id, $key)
 
 function the_post_list($list)
 {
-    $list = array_unique($list);
+    $list = array_filter(array_unique($list));
     sort($list);
     foreach ($list as &$theme) {
         $theme = get_post($theme);

@@ -18,22 +18,26 @@ $url = get_post_meta($post_ID, 'url', true);
                 }
                 ?>
             </li>
+            <?php if ($url) { ?>
             <li>
-                官網：
-                <?php
-                if ($url) {
-                    echo '<a href="' . esc_url($url) . '" rel="external nofollow" target="_blank">' . $url . '</a>';
-                }
-                ?>
+                官網： <?='<a href="' . esc_url($url) . '" rel="external nofollow" target="_blank">' . $url . '</a>' ?>
             </li>
+            <?php } ?>
             <li>
                 最新版本：<?php the_post_meta($post_ID, 'version'); ?>
             </li>
             <li>
                 使用網站數：<?php the_post_meta($post_ID, 'used_count'); ?>
             </li>
+            <?php if (has_tag()) { ?>
+            <li>
+                標籤： <?php the_tags('', ' , '); ?>
+            </li>
+            <?php } ?>
         </ul>
     </header>
+
+
 
     <footer>
         <p>

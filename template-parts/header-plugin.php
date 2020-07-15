@@ -1,3 +1,7 @@
+<h2>
+    <?php post_type_archive_title() ?>
+</h2>
+
 <p>
     排序：
     <select id="order" data-url="<?=esc_url(get_post_type_archive_link(get_post_type())) ?>">
