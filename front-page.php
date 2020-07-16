@@ -4,8 +4,8 @@ get_header();
 ?>
 
 <main id="site-content">
-    <div class="over-home">
-        <div class="new-site">
+    <div class="row">
+        <div class="col">
             <h2>新網站</h2>
             <?php
             $post_query->query([
@@ -20,7 +20,7 @@ get_header();
             }
             ?>
         </div>
-        <div class="popular-theme">
+        <div class="col">
             <h2>熱門佈景主題</h2>
             <?php
             $post_query->query([
@@ -38,7 +38,7 @@ get_header();
             }
             ?>
         </div>
-        <div class="popular-plugin">
+        <div class="col">
             <h2>熱門外掛</h2>
             <?php
             $post_query->query([

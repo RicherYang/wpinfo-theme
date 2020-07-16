@@ -7,6 +7,9 @@ $url = get_post_meta($post_ID, 'url', true);
 <article <?php post_class(); ?>>
     <header>
         <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
+    </header>
+
+    <footer>
         <ul class="post-meta">
             <li>
                 上架至 WordPress.org：
@@ -34,15 +37,10 @@ $url = get_post_meta($post_ID, 'url', true);
                 標籤： <?php the_tags('', ' , '); ?>
             </li>
             <?php } ?>
+            <li>
+                資料更新時間：<?php the_modified_time(get_option('date_format') . ' ' . get_option('time_format')); ?>
+            </li>
         </ul>
-    </header>
-
-
-
-    <footer>
-        <p>
-            資料更新時間：<?php the_modified_time(get_option('date_format') . ' ' . get_option('time_format')); ?>
-        </p>
         <p class="without-manual">
             相關資料為系統自動抓取，並未經過人工處理。
         </p>
@@ -50,7 +48,7 @@ $url = get_post_meta($post_ID, 'url', true);
 </article>
 
 <h2>相關網站</h2>
-<div class="over-link-website">
+<div class="masonry">
     <?php
     $post_query = new WP_Query();
     $post_query->query([

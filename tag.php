@@ -9,8 +9,8 @@ get_header();
         標籤【<?php single_tag_title() ?>】
     </h2>
 
-    <div class="over-home">
-        <div class="themes">
+    <div class="row">
+        <div class="col">
             <h2>佈景主題</h2>
             <?php
             $post_query->query([
@@ -29,7 +29,7 @@ get_header();
             }
             ?>
         </div>
-        <div class="plugins">
+        <div class="col">
             <h2>外掛</h2>
             <?php
             $post_query->query([

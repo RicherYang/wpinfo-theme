@@ -59,21 +59,44 @@ add_action('pre_get_posts', 'wei_custom_query');
 function wei_custom_query($query)
 {
     if (!is_admin()) {
-        if ($query->is_main_query() && $query->is_post_type_archive(['plugin', 'theme'])) {
-            if (!isset($_GET['order'])) {
-                $_GET['order'] = 'count';
+        if ($query->is_main_query()) {
+            if ($query->is_post_type_archive(['website'])) {
+                if (!isset($_GET['order'])) {
+                    $_GET['order'] = 'create';
+                }
+                $_GET['order'] = wp_unslash($_GET['order']);
+                switch ($_GET['order']) {
+                    case 'create':
+                        $query->set('orderby', 'ID');
+                        $query->set('order', 'DESC');
+                        break;
+                    case 'update':
+                        $query->set('orderby', 'modified');
+                        $query->set('order', 'DESC');
+                        break;
+                    case 'name':
+                        $query->set('orderby', 'title');
+                        $query->set('order', 'ASC');
+                        break;
+                }
             }
-            $_GET['order'] = wp_unslash($_GET['order']);
-            switch ($_GET['order']) {
-                case 'count':
-                    $query->set('meta_key', 'used_count');
-                    $query->set('orderby', 'meta_value_num');
-                    $query->set('order', 'DESC');
-                    break;
-                case 'name':
-                    $query->set('orderby', 'title');
-                    $query->set('order', 'ASC');
-                    break;
+
+            if ($query->is_post_type_archive(['plugin', 'theme'])) {
+                if (!isset($_GET['order'])) {
+                    $_GET['order'] = 'count';
+                }
+                $_GET['order'] = wp_unslash($_GET['order']);
+                switch ($_GET['order']) {
+                    case 'count':
+                        $query->set('meta_key', 'used_count');
+                        $query->set('orderby', 'meta_value_num');
+                        $query->set('order', 'DESC');
+                        break;
+                    case 'name':
+                        $query->set('orderby', 'title');
+                        $query->set('order', 'ASC');
+                        break;
+                }
             }
         }
     }
