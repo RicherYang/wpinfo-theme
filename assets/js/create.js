@@ -2,57 +2,52 @@
 
 jQuery(function ($) {
 
-    var data, recheckTimes;
-    $('#add_url').on('click', function () {
-        $('.url-info').addClass(['d-none']);
+    let wsCreate = {
+        init: function () {
+            $('#add_url').on('click', this.checkUrl);
+        },
 
-        data = $('#create_form').serializeObject();
-        sendApi({
-            url: ajaxInfo.url + '/check_url',
-            data: data,
-            method: 'POST',
-            success: function (Jdata) {
-                if (Jdata.url !== undefined) {
-                    window.location = Jdata.url;
-                }
-                if (Jdata.info !== undefined) {
-                    var $info = $('.' + Jdata.info);
-                    if ($info.length == 0) {
-                        alert(Jdata.info);
-                    } else {
-                        $info.removeClass(['d-none']);
-                        if (Jdata.info == 'confirming') {
-                            recheckTimes = 0;
-                            setTimeout(recheck, 2500);
-                        }
-                    }
-                }
-            }
-        });
-    });
-
-    function recheck() {
-        var checkData = $('#create_form').serializeObject();
-        if (JSON.stringify(checkData) == JSON.stringify(data)) {
-            recheckTimes += 1;
+        checkUrl: function () {
+            $('.url-info').addClass(['d-none']);
+            let postData = $('#create_form').serializeObject();
             sendApi({
                 url: ajaxInfo.url + '/check_url',
-                data: data,
+                data: postData,
                 method: 'POST',
                 success: function (Jdata) {
                     if (Jdata.url !== undefined) {
                         window.location = Jdata.url;
                     }
                     if (Jdata.info !== undefined) {
-                        if (Jdata.info == 'confirming') {
-                            if (recheckTimes < 5) {
-                                setTimeout(recheck, 2500);
+                        let $info = $('.' + Jdata.info);
+                        if ($info.length == 0) {
+                            alert(Jdata.info);
+                        } else {
+                            $info.removeClass(['d-none']);
+                            if (Jdata.info == 'confirming') {
+                                wsCreate.getInfo(Jdata.id);
                             }
                         }
                     }
                 }
             });
-        }
-    }
+        },
 
+        getInfo: function (siteID) {
+            sendApi({
+                url: ajaxInfo.url + '/get_info',
+                data: {
+                    site_ID: siteID
+                },
+                method: 'POST',
+                success: function (Jdata) {
+                    if (Jdata.url !== undefined) {
+                        window.location = Jdata.url;
+                    }
+                }
+            });
+        }
+    };
+
+    wsCreate.init();
 });

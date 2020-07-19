@@ -24,7 +24,7 @@ function wpi_register_styles()
     wp_enqueue_script('wpi-script');
 
     wp_localize_script('wpi-create-script', 'ajaxInfo', [
-        'url' => rest_url('wei/v1/site')
+        'url' => rest_url('wpi/v1/site')
     ]);
 }
 
