@@ -21,6 +21,24 @@
     }
 }
 
+.btn-link {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: nice-rem(-.5);
+    margin-right: nice-rem(-.5);
+
+    a {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+
+        padding: $input-padding-x $input-padding-y;
+        margin: nice-rem(.5);
+        border: 1px solid map-get($colors, border);
+        border-radius: $basic-border-radius;
+    }
+}
+
 .type-plugin,
 .type-theme {
     footer {

@@ -107,13 +107,19 @@ function the_post_meta($post_id, $key)
     echo get_post_meta($post_id, $key, true);
 }
 
-function the_post_list($list)
+function the_post_list($list, $glue = ', ')
 {
+    $show_list = [];
     $list = array_filter(array_unique($list));
-    sort($list);
-    foreach ($list as &$theme) {
-        $theme = get_post($theme);
-        $theme = sprintf('<a href="%s">%s</a>', esc_url(get_permalink($theme)), get_the_title($theme));
+    foreach ($list as $post_id) {
+        $post = get_post($post_id);
+        $show_list[get_the_title($post)] = get_permalink($post);
     }
-    echo implode(' , ', $list);
+    asort($show_list);
+
+    array_walk($show_list, function (&$link, $name) {
+        $link = sprintf('<a href="%s">%s</a>', esc_url($link), $name);
+    });
+
+    echo implode($glue, $show_list);
 }
