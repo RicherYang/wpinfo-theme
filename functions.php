@@ -16,9 +16,13 @@ function wpi_register_styles()
     $version = wp_get_theme()->get('Version');
     wp_enqueue_style('wpi-style', get_stylesheet_directory_uri() . '/assets/css/main.css', [], $version);
 
-    wp_register_script('amp', 'https://cdn.ampproject.org/v0.js', [], null);
-    wp_register_script('amp-form', 'https://cdn.ampproject.org/v0/amp-form-0.1.js', ['amp'], null);
-    wp_register_script('amp-mustache', 'https://cdn.ampproject.org/v0/amp-mustache-0.2.js', ['amp'], null);
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js', [], null, true);
+    wp_register_script('wpi-add', get_stylesheet_directory_uri() . '/assets/js/create.js', ['jquery'], $version, true);
+
+    wp_localize_script('wpi-add', 'ajaxInfo', [
+        'url' => rest_url('wpi/v1/site')
+    ]);
 }
 
 add_action('enqueue_block_editor_assets', 'wpi_block_editor_styles');
@@ -27,19 +31,6 @@ function wpi_block_editor_styles()
     $version = wp_get_theme()->get('Version');
 
     wp_enqueue_style('wpi-block-editor-style', get_stylesheet_directory_uri() . '/assets/css/block-editor.css', [], $version);
-}
-
-add_filter('script_loader_tag', 'wpi_async_for_amp', 10, 3);
-function wpi_async_for_amp($tag, $handle, $src)
-{
-    if (strpos($handle, 'amp') === 0) {
-        if ($handle == 'amp') {
-            $tag = str_replace('src=', 'async src=', $tag);
-        } else {
-            $tag = str_replace('src=', 'async custom-template=\'' . $handle . '\' src=', $tag);
-        }
-    }
-    return $tag;
 }
 
 add_action('init', 'wpi_menus');
