@@ -16,16 +16,9 @@ function wpi_register_styles()
     $version = wp_get_theme()->get('Version');
     wp_enqueue_style('wpi-style', get_stylesheet_directory_uri() . '/assets/css/main.css', [], $version);
 
-    wp_deregister_script('jquery');
-    wp_register_script('jquery', 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js', [], null, true);
-    wp_register_script('wpi-script', get_stylesheet_directory_uri() . '/assets/js/main.js', ['jquery'], $version, true);
-    wp_register_script('wpi-create-script', get_stylesheet_directory_uri() . '/assets/js/create.js', ['wpi-script'], $version, true);
-
-    wp_enqueue_script('wpi-script');
-
-    wp_localize_script('wpi-create-script', 'ajaxInfo', [
-        'url' => rest_url('wpi/v1/site')
-    ]);
+    wp_register_script('amp', 'https://cdn.ampproject.org/v0.js', [], null);
+    wp_register_script('amp-form', 'https://cdn.ampproject.org/v0/amp-form-0.1.js', ['amp'], null);
+    wp_register_script('amp-mustache', 'https://cdn.ampproject.org/v0/amp-mustache-0.2.js', ['amp'], null);
 }
 
 add_action('enqueue_block_editor_assets', 'wpi_block_editor_styles');
@@ -36,6 +29,19 @@ function wpi_block_editor_styles()
     wp_enqueue_style('wpi-block-editor-style', get_stylesheet_directory_uri() . '/assets/css/block-editor.css', [], $version);
 }
 
+add_filter('script_loader_tag', 'wpi_async_for_amp', 10, 3);
+function wpi_async_for_amp($tag, $handle, $src)
+{
+    if (strpos($handle, 'amp') === 0) {
+        if ($handle == 'amp') {
+            $tag = str_replace('src=', 'async src=', $tag);
+        } else {
+            $tag = str_replace('src=', 'async custom-template=\'' . $handle . '\' src=', $tag);
+        }
+    }
+    return $tag;
+}
+
 add_action('init', 'wpi_menus');
 function wpi_menus()
 {
@@ -44,8 +50,8 @@ function wpi_menus()
     ]);
 }
 
-add_filter('navigation_markup_template', 'wei_navigation_markup_template');
-function wei_navigation_markup_template($template)
+add_filter('navigation_markup_template', 'wpi_navigation_markup_template');
+function wpi_navigation_markup_template($template)
 {
     $template = '
 	<nav class="navigation" role="navigation" aria-label="%4$s">
@@ -55,8 +61,8 @@ function wei_navigation_markup_template($template)
     return $template;
 }
 
-add_action('pre_get_posts', 'wei_custom_query');
-function wei_custom_query($query)
+add_action('pre_get_posts', 'wpi_custom_query');
+function wpi_custom_query($query)
 {
     if (!is_admin()) {
         if ($query->is_main_query()) {
@@ -113,13 +119,9 @@ function the_post_list($list, $glue = ', ')
     $list = array_filter(array_unique($list));
     foreach ($list as $post_id) {
         $post = get_post($post_id);
-        $show_list[get_the_title($post)] = get_permalink($post);
+        $show_list[strtolower(get_the_title($post))] = sprintf('<a href="%s">%s</a>', esc_url(get_permalink($post)), get_the_title($post));
     }
-    asort($show_list);
-
-    array_walk($show_list, function (&$link, $name) {
-        $link = sprintf('<a href="%s">%s</a>', esc_url($link), $name);
-    });
+    ksort($show_list, SORT_STRING);
 
     echo implode($glue, $show_list);
 }
