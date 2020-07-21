@@ -95,6 +95,15 @@ function wpi_custom_query($query)
                         break;
                 }
             }
+
+            if ($query->is_tag()) {
+                $query->set('post_type', ['plugin', 'theme']);
+                $query->set('posts_per_page', -1);
+            }
+
+            if ($query->is_search()) {
+                $query->set('posts_per_page', -1);
+            }
         }
     }
 }

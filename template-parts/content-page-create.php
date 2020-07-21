@@ -6,7 +6,7 @@ wp_enqueue_script('wpi-add');
     <fieldset id="add_form">
         <label for="url">WordPress 網址</label>
         <div class="input-box">
-            <div class="input-box-prev">https://</div>
+            <div class="input-box">https://</div>
             <input type="text" class="input" name="url" id="url" required>
         </div>
         <button type="button" id="add_url">提交網站</button>

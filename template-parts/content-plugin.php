@@ -2,6 +2,9 @@
 $post_ID = get_the_ID();
 $at_org = get_post_meta($post_ID, 'at_org', true);
 $url = get_post_meta($post_ID, 'url', true);
+$post_type = get_post_type();
+$used_count = get_post_meta($post_ID, 'used_count', true);
+$total_count = wp_count_posts($post_type);
 ?>
 
 <article <?php post_class(); ?>>
@@ -15,7 +18,7 @@ $url = get_post_meta($post_ID, 'url', true);
                 上架至 WordPress.org：
                 <?php
                 if ($at_org) {
-                    echo '<a href="https://tw.wordpress.org/' . get_post_type() . 's/' . get_post_field('post_name', $post_ID) . '/" rel="external" target="_blank">WordPress.org 網頁</a>';
+                    echo '<a href="https://tw.wordpress.org/' . $post_type . 's/' . get_post_field('post_name', $post_ID) . '/" rel="external" target="_blank">WordPress.org 網頁</a>';
                 } else {
                     echo '否';
                 }
@@ -30,7 +33,7 @@ $url = get_post_meta($post_ID, 'url', true);
                 最新版本：<?php the_post_meta($post_ID, 'version'); ?>
             </li>
             <li>
-                使用網站數：<?php the_post_meta($post_ID, 'used_count'); ?>
+                使用網站數：<?=$used_count ?> ( <?=round($used_count / $total_count->publish * 100, 1) ?>% )
             </li>
             <?php if (has_tag()) { ?>
             <li>
@@ -54,7 +57,7 @@ $url = get_post_meta($post_ID, 'url', true);
     $post_query->query([
         'post_type' => 'website',
         'post_status' => 'publish',
-        'meta_key' => get_post_type(),
+        'meta_key' => $post_type,
         'meta_value' => $post_ID,
         'orderby' => 'modified',
         'order' => 'DESC',

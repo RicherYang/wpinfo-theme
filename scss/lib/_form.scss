@@ -32,17 +32,33 @@ label {
 .input-box {
     display: inline-flex;
 
-    .input-box-prev {
+    .input-box {
         flex: 0 0 auto;
         padding: $input-padding-x $input-padding-y;
+        margin-left: 0;
+        background-color: map-get($colors, btn-bg);
         border: 1px solid map-get($colors, border);
         border-right-width: 0;
-        background-color: map-get($colors, btn-bg);
-        border-top-left-radius: $basic-border-radius;
-        border-bottom-left-radius: $basic-border-radius;
+        border-radius: $basic-border-radius;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .input + .input-box {
+        border-right-width: 1px;
+        border-left-width: 0;
+        border-radius: $basic-border-radius;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
     }
 
     .input {
+        border-radius: $basic-border-radius;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .input-box + .input {
+        border-radius: $basic-border-radius;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }

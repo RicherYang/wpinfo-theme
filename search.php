@@ -7,11 +7,24 @@ get_header();
 ?>
 
 <main id="site-content">
-    <h2>
-        標籤【<?php single_tag_title() ?>】
-    </h2>
+    <h2>搜尋【<?=get_search_query() ?>】</h2>
 
     <div class="row">
+        <?php if (isset($post_types['website'])) { ?>
+        <div class="col">
+            <h2>網站</h2>
+            <?php
+            while (have_posts()) {
+                the_post();
+
+                if (get_post_type() == 'website') {
+                    get_template_part('template-parts/loop', 'website');
+                }
+            }
+            ?>
+        </div>
+        <?php } ?>
+
         <?php if (isset($post_types['theme'])) { ?>
         <div class="col">
             <h2>佈景主題</h2>

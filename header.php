@@ -19,5 +19,6 @@
                 'theme_location' => 'primary'
             ]);
         }
+        get_search_form();
         ?>
     </header>

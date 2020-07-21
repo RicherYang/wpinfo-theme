@@ -1,6 +1,21 @@
-#header-menu {
+#site-header {
     padding: 1rem nice-rem(1.5);
     border-bottom: 1px solid map-get($colors, border);
+
+    .search-form {
+        @include pad-style {
+            display: inline-block;
+            margin-left: nice-rem(1.5);
+        }
+    }
+}
+
+#header-menu {
+    margin-bottom: nice-rem(.5);
+
+    @include pad-style {
+        display: inline-block;
+    }
 
     .menu-item {
         display: inline-block;

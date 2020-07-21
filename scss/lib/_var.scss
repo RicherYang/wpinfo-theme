@@ -3,6 +3,18 @@
     @return #{$remSize}rem;
 }
 
+@mixin pad-style() {
+    @media (min-width: 769px) {
+        @content;
+    }
+}
+
+@mixin pc-style() {
+    @media (min-width: 1400px) {
+        @content;
+    }
+}
+
 $basic-font-size: 17px;
 $basic-font-weight: 400;
 $basic-line-height: 1.6;

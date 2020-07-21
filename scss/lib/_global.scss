@@ -53,11 +53,11 @@ a {
 #site-content {
     padding: nice-rem(1.5);
 
-    @media (min-width: 1000px) {
+    @include pad-style {
         max-width: 90vw;
         margin: 0 auto;
     }
-    @media (min-width: 1400px) {
+    @include pc-style {
         max-width: 80vw;
         margin: 0 auto;
     }
