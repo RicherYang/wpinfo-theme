@@ -14,9 +14,7 @@ if (empty($guest_rest)) {
 <article <?php post_class(); ?>>
     <header>
         <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
-        <p>
-            <?=get_post_meta($post_ID, 'description', true) ?>
-        </p>
+        <?php the_excerpt() ?>
     </header>
 
 

@@ -1,7 +1,35 @@
 <?php
-global $wp_query;
-$post_types = array_column($wp_query->posts, 'post_type');
-$post_types = array_count_values($post_types);
+$query = new WP_Query;
+$content_args = [
+    's' => get_search_query(),
+    'post_status' => 'publish',
+    'orderby' => 'none',
+    'posts_per_page' => -1,
+    'fields' => 'ids'
+];
+$url_args = [
+    'meta_query' => [
+        [
+            'key' => 'url',
+            'value' => get_search_query(),
+            'compare' => 'LIKE'
+        ]
+    ],
+    'post_status' => 'publish',
+    'orderby' => 'none',
+    'posts_per_page' => -1,
+    'fields' => 'ids'
+];
+$real_args = [
+    'post_status' => 'publish',
+    'orderby' => 'rand',
+    'posts_per_page' => -1
+];
+$show_list = [
+    'website' => '網站',
+    'plugin' => '外掛',
+    'theme' => '佈景主題'
+];
 
 get_header();
 ?>
@@ -10,50 +38,35 @@ get_header();
     <h2>搜尋【<?=get_search_query() ?>】</h2>
 
     <div class="row">
-        <?php if (isset($post_types['website'])) { ?>
-        <div class="col">
-            <h2>網站</h2>
-            <?php
-            while (have_posts()) {
-                the_post();
+        <?php
+        foreach ($show_list as $type => $name) {
+            $content_args['post_type'] = $type;
+            $url_args['post_type'] = $type;
+            $real_args['post_type'] = $type;
 
-                if (get_post_type() == 'website') {
-                    get_template_part('template-parts/loop', 'website');
-                }
+            $ids = array_merge($query->query($content_args), $query->query($url_args));
+            $real_args['post__in'] = array_unique($ids);
+            if (count($real_args['post__in']) == 0) {
+                continue;
             }
-            ?>
-        </div>
-        <?php } ?>
-
-        <?php if (isset($post_types['theme'])) { ?>
+            $query->query($real_args);
+            if ($query->have_posts()) {
+                ?>
         <div class="col">
-            <h2>佈景主題</h2>
+            <h2>
+                <?=$name ?>
+            </h2>
             <?php
-            while (have_posts()) {
-                the_post();
+            while ($query->have_posts()) {
+                $query->the_post();
 
-                if (get_post_type() == 'theme') {
-                    get_template_part('template-parts/loop', 'theme');
-                }
-            }
-            ?>
+                get_template_part('template-parts/loop', $type);
+            } ?>
         </div>
-        <?php } ?>
-
-        <?php if (isset($post_types['plugin'])) { ?>
-        <div class="col">
-            <h2>外掛</h2>
-            <?php
-            while (have_posts()) {
-                the_post();
-
-                if (get_post_type() == 'plugin') {
-                    get_template_part('template-parts/loop', 'plugin');
-                }
+        <?php
             }
-            ?>
-        </div>
-        <?php } ?>
+        }
+        ?>
     </div>
 </main>
 

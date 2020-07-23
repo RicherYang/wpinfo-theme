@@ -91,14 +91,20 @@
     }
 }
 
+.order-list {
+    a {
+        display: inline-block;
+
+        + a {
+            padding-left: nice-rem(.3);
+        }
+    }
+}
+
 .masonry {
     @include pad-style{
-        column-count: 2;
-        column-gap: 2rem;
-
-        > .status-publish {
-            display: inline-block;
-            width: 100%;
-        }
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }

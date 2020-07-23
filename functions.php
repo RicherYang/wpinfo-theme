@@ -102,7 +102,7 @@ function wpi_custom_query($query)
             }
 
             if ($query->is_search()) {
-                $query->set('posts_per_page', -1);
+                $query->set('posts_per_page', 1);
             }
         }
     }
