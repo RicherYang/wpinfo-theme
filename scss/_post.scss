@@ -94,9 +94,17 @@
 .order-list {
     a {
         display: inline-block;
+        padding-right: nice-rem(.3);
 
         + a {
-            padding-left: nice-rem(.3);
+            padding-left: nice-rem(.2);
+        }
+
+        &.active {
+            color: darken(map-get($colors, link), 15%);
+        }
+        &:hover {
+            text-decoration: underline;
         }
     }
 }

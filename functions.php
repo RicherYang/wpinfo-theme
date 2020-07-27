@@ -1,4 +1,6 @@
 <?php
+include_once __DIR__ . '/includes/template.php';
+
 add_action('after_setup_theme', 'wpi_theme_support');
 function wpi_theme_support()
 {
@@ -58,40 +60,57 @@ function wpi_custom_query($query)
     if (!is_admin()) {
         if ($query->is_main_query()) {
             if ($query->is_post_type_archive(['website'])) {
-                if (!isset($_GET['order'])) {
-                    $_GET['order'] = 'create';
+                $_GET['orderby'] = isset($_GET['orderby']) ? $_GET['orderby'] : '';
+                $_GET['orderby'] = strtolower(wp_unslash($_GET['orderby']));
+                if (strpos($_GET['orderby'], '_') === false) {
+                    $_GET['orderby'] = 'update_d';
                 }
-                $_GET['order'] = wp_unslash($_GET['order']);
-                switch ($_GET['order']) {
-                    case 'create':
-                        $query->set('orderby', 'ID');
-                        $query->set('order', 'DESC');
-                        break;
+                list($orderby, $order) = explode('_', $_GET['orderby']);
+
+                switch ($orderby) {
                     case 'update':
                         $query->set('orderby', 'modified');
-                        $query->set('order', 'DESC');
                         break;
                     case 'name':
                         $query->set('orderby', 'title');
+                        break;
+                    case 'create':
+                        $query->set('orderby', 'ID');
+                        break;
+                }
+                switch ($order) {
+                    case 'a':
                         $query->set('order', 'ASC');
+                        break;
+                    case 'd':
+                        $query->set('order', 'DESC');
                         break;
                 }
             }
 
             if ($query->is_post_type_archive(['plugin', 'theme'])) {
-                if (!isset($_GET['order'])) {
-                    $_GET['order'] = 'count';
+                $_GET['orderby'] = isset($_GET['orderby']) ? $_GET['orderby'] : '';
+                $_GET['orderby'] = strtolower(wp_unslash($_GET['orderby']));
+                if (strpos($_GET['orderby'], '_') === false) {
+                    $_GET['orderby'] = 'count_d';
                 }
-                $_GET['order'] = wp_unslash($_GET['order']);
-                switch ($_GET['order']) {
+                list($orderby, $order) = explode('_', $_GET['orderby']);
+
+                switch ($orderby) {
+                    case 'name':
+                        $query->set('orderby', 'title');
+                        break;
                     case 'count':
                         $query->set('meta_key', 'used_count');
                         $query->set('orderby', 'meta_value_num');
-                        $query->set('order', 'DESC');
                         break;
-                    case 'name':
-                        $query->set('orderby', 'title');
+                }
+                switch ($order) {
+                    case 'a':
                         $query->set('order', 'ASC');
+                        break;
+                    case 'd':
+                        $query->set('order', 'DESC');
                         break;
                 }
             }
@@ -106,22 +125,4 @@ function wpi_custom_query($query)
             }
         }
     }
-}
-
-function the_post_meta($post_id, $key)
-{
-    echo get_post_meta($post_id, $key, true);
-}
-
-function the_post_list($list, $glue = ', ')
-{
-    $show_list = [];
-    $list = array_filter(array_unique($list));
-    foreach ($list as $post_id) {
-        $post = get_post($post_id);
-        $show_list[strtolower(get_the_title($post))] = sprintf('<a href="%s">%s</a>', esc_url(get_permalink($post)), get_the_title($post));
-    }
-    ksort($show_list, SORT_STRING);
-
-    echo implode($glue, $show_list);
 }

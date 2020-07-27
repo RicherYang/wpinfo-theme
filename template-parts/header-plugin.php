@@ -6,6 +6,8 @@
 
 <p class="order-list">
     排序：
-    <a href="<?=esc_url(add_query_arg(['order' => 'count'], $basic_url)) ?>">使用網站數</a>
-    <a href="<?=esc_url(add_query_arg(['order' => 'name'], $basic_url)) ?>">名稱</a>
+    <?php the_orderby_list($basic_url, [
+        'count_d' => '使用網站數',
+        'name_a' => '名稱'
+    ]); ?>
 </p>

@@ -17,8 +17,6 @@ if (empty($guest_rest)) {
         <?php the_excerpt() ?>
     </header>
 
-
-
     <footer>
         <ul class="post-meta">
             <li>
