@@ -20,8 +20,8 @@ if (empty($guest_rest)) {
     <footer>
         <ul class="post-meta">
             <li>
-                網址：<a href="<?=esc_url($url) ?>" rel="ugc nofollow" target="_blank"><?=$url ?></a>
-                <a href="https://richer.tools/query/whois/<?=esc_attr(parse_url($url, PHP_URL_HOST)) ?>" rel="external" target="_blank">網域 WHOIS 資訊</a>
+                網址：<a href="<?=esc_url($url) ?>" rel="external nofollow ugc noopener" target="_blank"><?=$url ?></a>
+                <a href="https://richer.tools/query/whois/<?=esc_attr(parse_url($url, PHP_URL_HOST)) ?>" rel="external noopener" target="_blank">網域 WHOIS 資訊</a>
             </li>
             <li>
                 佈景主題：<span class="btn-link"><?php the_post_list(get_post_meta($post_ID, 'theme'), ''); ?></span>

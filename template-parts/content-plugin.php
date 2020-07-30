@@ -18,7 +18,7 @@ $total_count = wp_count_posts($post_type);
                 上架至 WordPress.org：
                 <?php
                 if ($at_org) {
-                    echo '<a href="https://tw.wordpress.org/' . $post_type . 's/' . get_post_field('post_name', $post_ID) . '/" rel="external" target="_blank">WordPress.org 網頁</a>';
+                    echo '<a href="https://tw.wordpress.org/' . $post_type . 's/' . get_post_field('post_name', $post_ID) . '/" rel="external nofollow noopener" target="_blank">WordPress.org 網頁</a>';
                 } else {
                     echo '否';
                 }
