@@ -23,16 +23,14 @@ function the_orderby_list($basic_url, $order_list)
     list($get_orderby, $get_order) = explode('_', $_GET['orderby']);
 
     foreach ($order_list as $key => $name) {
-        list($key_orderby, $key_order) = explode('_', $key);
-        $active = $get_orderby == $key_orderby;
+        $active = $get_orderby == $key;
 
-        $url_order = $active ? ($get_order == 'd' ? '_a' : '_d') : '_' . $key_order;
-        $name_orderby = $active ? $get_order : $key_order;
+        $url_order = $active ? ($get_order == 'd' ? '_a' : '_d') : '_d';
         printf(
             '<a href="%1$s" class="%2$s">%3$s</a>',
-            esc_url(add_query_arg(['orderby' => $key_orderby . $url_order], $basic_url)),
-            $active ? 'active' : '',
-            $name . ' ' . ($name_orderby == 'd' ? '↑' : '↓')
+            esc_url(add_query_arg(['orderby' => $key . $url_order], $basic_url)),
+            $active ? 'active ' . ($get_order == 'd' ? 'order-desc' : 'order-asc') : '',
+            $name
         );
     }
 }

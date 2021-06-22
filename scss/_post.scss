@@ -96,6 +96,21 @@
         display: inline-block;
         padding-right: nice-rem(.3);
 
+        &.order-desc {
+            &:after{
+                display: inline-block;
+                padding-left: nice-rem(.3);
+                content: '↓';
+            }
+        }
+        &.order-asc {
+            &:after{
+                display: inline-block;
+                padding-left: nice-rem(.3);
+                content: '↑';
+            }
+        }
+
         + a {
             padding-left: nice-rem(.2);
         }

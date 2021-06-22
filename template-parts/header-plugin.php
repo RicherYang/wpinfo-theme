@@ -7,7 +7,7 @@
 <p class="order-list">
     排序：
     <?php the_orderby_list($basic_url, [
-        'count_d' => '使用網站數',
-        'name_a' => '名稱'
+        'count' => '使用網站數',
+        'name' => '名稱'
     ]); ?>
 </p>
