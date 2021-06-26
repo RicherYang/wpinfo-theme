@@ -19,7 +19,7 @@ function wpi_register_styles()
     wp_enqueue_style('wpi-style', get_stylesheet_directory_uri() . '/assets/css/main.css', [], $version);
 
     wp_deregister_script('jquery');
-    wp_register_script('jquery', 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js', [], null, true);
+    wp_register_script('jquery', 'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js', [], null, true);
     wp_register_script('wpi-add', get_stylesheet_directory_uri() . '/assets/js/create.js', ['jquery'], $version, true);
 
     wp_localize_script('wpi-add', 'ajaxInfo', [

@@ -9,6 +9,11 @@ if (empty($guest_rest)) {
 } else {
     $guest_rest = true;
 }
+
+$whois_url = parse_url($url, PHP_URL_HOST);
+if (strpos($whois_url, 'www.') === 0) {
+    $whois_url = substr($whois_url, 4);
+}
 ?>
 
 <article <?php post_class(); ?>>
@@ -17,18 +22,21 @@ if (empty($guest_rest)) {
         <?php the_excerpt() ?>
     </header>
 
+    <ul class="post-meta">
+        <li>
+            網址：<a href="<?=esc_url($url) ?>" rel="external nofollow ugc noopener" target="_blank"><?=$url ?></a>
+            <a href="https://richer.tools/query/whois/<?=esc_attr($whois_url) ?>" rel="external noopener" target="_blank">網域 WHOIS 資訊</a>
+        </li>
+        <li>
+            佈景主題：<span class="btn-link"><?php the_post_list(get_post_meta($post_ID, 'theme'), ''); ?></span>
+        </li>
+        <li>
+            外掛：<span class="btn-link"><?php the_post_list(get_post_meta($post_ID, 'plugin'), ''); ?></span>
+        </li>
+    </ul>
+
     <footer>
         <ul class="post-meta">
-            <li>
-                網址：<a href="<?=esc_url($url) ?>" rel="external nofollow ugc noopener" target="_blank"><?=$url ?></a>
-                <a href="https://richer.tools/query/whois/<?=esc_attr(parse_url($url, PHP_URL_HOST)) ?>" rel="external noopener" target="_blank">網域 WHOIS 資訊</a>
-            </li>
-            <li>
-                佈景主題：<span class="btn-link"><?php the_post_list(get_post_meta($post_ID, 'theme'), ''); ?></span>
-            </li>
-            <li>
-                外掛：<span class="btn-link"><?php the_post_list(get_post_meta($post_ID, 'plugin'), ''); ?></span>
-            </li>
             <li>
                 支援訪客使用 REST：<?=$guest_rest ? '是': '否' ?>
             </li>

@@ -1,5 +1,4 @@
 <?php
-
 function the_post_meta($post_id, $key)
 {
     echo get_post_meta($post_id, $key, true);
