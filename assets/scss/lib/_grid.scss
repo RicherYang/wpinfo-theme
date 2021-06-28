@@ -1,0 +1,36 @@
+%basic-col {
+    padding-right: $grid-space;
+    padding-left: $grid-space;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -$grid-space;
+    margin-left: -$grid-space;
+}
+
+.col {
+    @extend %basic-col;
+
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+.col-auto {
+    @extend %basic-col;
+
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+
+@each $em in $grid-col-em {
+    .col-#{$em}em {
+        @extend %basic-col;
+
+        flex: 0 0 calc(#{$em * 1em} + #{$grid-space * 2});
+        max-width: calc(#{$em * 1em} + #{$grid-space * 2});
+    }
+}

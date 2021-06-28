@@ -1,6 +1,11 @@
+@import "lib/function";
 @import "lib/var";
+@import "lib/mixin";
+
 @import "lib/global";
+@import "lib/grid";
 @import "lib/form";
+
 @import "header";
 @import "post";
 @import "footer";

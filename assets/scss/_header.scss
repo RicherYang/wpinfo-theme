@@ -1,28 +1,23 @@
 #site-header {
-    padding: 1rem nice-rem(1.5);
+    padding: nice-px(1) nice-px(2);
     border-bottom: 1px solid map-get($colors, border);
 
     .search-form {
         @include pad-style {
             display: inline-block;
-            margin-left: nice-rem(1.5);
+            margin-left: nice-px(1);
+            margin-right: nice-px(1);
         }
     }
 }
 
 #header-menu {
-    margin-bottom: nice-rem(.5);
-
     @include pad-style {
         display: inline-block;
     }
 
     .menu-item {
         display: inline-block;
-        padding-right: nice-rem(.5);
-
-        &:last-of-type {
-            padding-right: 0;
-        }
+        padding-right: nice-px(.5);
     }
 }

@@ -1,0 +1,3 @@
+@function nice-px($size) {
+    @return round($size * $basic-font-size);
+}

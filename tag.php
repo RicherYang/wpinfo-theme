@@ -20,7 +20,7 @@ get_header();
                 the_post();
 
                 if (get_post_type() == 'theme') {
-                    get_template_part('template-parts/loop', 'theme');
+                    get_template_part('template-parts/loop/theme');
                 }
             }
             ?>
@@ -35,7 +35,7 @@ get_header();
                 the_post();
 
                 if (get_post_type() == 'plugin') {
-                    get_template_part('template-parts/loop', 'plugin');
+                    get_template_part('template-parts/loop/plugin');
                 }
             }
             ?>

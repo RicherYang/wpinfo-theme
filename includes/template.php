@@ -4,17 +4,22 @@ function the_post_meta($post_id, $key)
     echo get_post_meta($post_id, $key, true);
 }
 
-function the_post_list($list, $glue = ', ')
+function the_post_list($list)
 {
+    if (!is_array($list)) {
+        return ;
+    }
+
+    echo '<div class="row">';
     $show_list = [];
-    $list = array_filter(array_unique($list));
-    foreach ($list as $post_id) {
-        $post = get_post($post_id);
-        $show_list[strtolower(get_the_title($post))] = sprintf('<a href="%s">%s</a>', esc_url(get_permalink($post)), get_the_title($post));
+    foreach ($list as $post) {
+        echo '<div class="col-auto">'
+            . sprintf('<a class="btn-link" href="%s">%s</a>', esc_url(get_permalink($post)), get_the_title($post))
+            . '</div>';
     }
     ksort($show_list, SORT_STRING);
 
-    echo implode($glue, $show_list);
+    echo '</div>';
 }
 
 function the_orderby_list($basic_url, $order_list)

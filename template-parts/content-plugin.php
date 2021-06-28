@@ -1,9 +1,6 @@
 <?php
-$post_ID = get_the_ID();
-$at_org = get_post_meta($post_ID, 'at_org', true);
-$url = get_post_meta($post_ID, 'url', true);
+$url = get_field('url', false);
 $post_type = get_post_type();
-$used_count = get_post_meta($post_ID, 'used_count', true);
 $total_count = wp_count_posts($post_type);
 ?>
 
@@ -12,36 +9,43 @@ $total_count = wp_count_posts($post_type);
         <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
     </header>
 
-    <footer>
-        <ul class="post-meta">
-            <li>
-                上架至 WordPress.org：
+    <div class="entry-content">
+        <div class="row">
+            <div class="col-9em">上架 WordPress.org</div>
+            <div class="col">
                 <?php
-                if ($at_org) {
-                    echo '<a href="https://tw.wordpress.org/' . $post_type . 's/' . get_post_field('post_name', $post_ID) . '/" rel="external nofollow noopener" target="_blank">WordPress.org 網頁</a>';
+                if (get_field('at_org')) {
+                    echo '<a href="https://tw.wordpress.org/' . $post_type . 's/' . get_post_field('post_name', get_the_ID()) . '/" rel="external nofollow noopener" target="_blank">WordPress.org 網頁</a>';
                 } else {
                     echo '否';
                 }
                 ?>
-            </li>
-            <?php if ($url) { ?>
+            </div>
+        </div>
+
+        <?php if ($url) { ?>
+        <div class="row">
+            <div class="col-2em">官網</div>
+            <div class="col">
+                <a href="<?=esc_url($url) ?>" rel="external nofollow ugc noopener" target="_blank"><?=$url ?></a>
+            </div>
+        </div>
+        <?php } ?>
+
+        <?php if (has_tag()) { ?>
+        <div class="row">
+            <div class="col-2em">標籤</div>
+            <div class="col">
+                <?php the_tags('', ' , '); ?>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+
+    <footer>
+        <ul class="post-meta">
             <li>
-                官網： <?='<a href="' . esc_url($url) . '" rel="external nofollow" target="_blank">' . $url . '</a>' ?>
-            </li>
-            <?php } ?>
-            <li>
-                最新版本：<?php the_post_meta($post_ID, 'version'); ?>
-            </li>
-            <li>
-                使用網站數：<?=$used_count ?> ( <?=round($used_count / $total_count->publish * 100, 1) ?>% )
-            </li>
-            <?php if (has_tag()) { ?>
-            <li>
-                標籤： <?php the_tags('', ' , '); ?>
-            </li>
-            <?php } ?>
-            <li>
-                資料更新時間：<?php the_modified_time(get_option('date_format') . ' ' . get_option('time_format')); ?>
+                資料更新時間 <?php the_modified_time(get_option('date_format') . ' ' . get_option('time_format')); ?>
             </li>
         </ul>
         <p class="without-manual">
@@ -49,24 +53,3 @@ $total_count = wp_count_posts($post_type);
         </p>
     </footer>
 </article>
-
-<h2>相關網站</h2>
-<div class="masonry">
-    <?php
-    $post_query = new WP_Query();
-    $post_query->query([
-        'post_type' => 'website',
-        'post_status' => 'publish',
-        'meta_key' => $post_type,
-        'meta_value' => $post_ID,
-        'orderby' => 'modified',
-        'order' => 'DESC',
-        'posts_per_page' => '-1'
-    ]);
-    while ($post_query->have_posts()) {
-        $post_query->the_post();
-
-        get_template_part('template-parts/loop', 'website');
-    }
-    ?>
-</div>

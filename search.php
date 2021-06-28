@@ -60,7 +60,7 @@ get_header();
             while ($query->have_posts()) {
                 $query->the_post();
 
-                get_template_part('template-parts/loop', $type);
+                get_template_part('template-parts/loop/' . $type);
             } ?>
         </div>
         <?php

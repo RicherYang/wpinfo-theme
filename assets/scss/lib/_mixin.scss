@@ -1,0 +1,11 @@
+@mixin pad-style() {
+    @media (min-width: 769px) {
+        @content;
+    }
+}
+
+@mixin pc-style() {
+    @media (min-width: 1400px) {
+        @content;
+    }
+}

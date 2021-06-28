@@ -27,14 +27,6 @@ function wpi_register_styles()
     ]);
 }
 
-add_action('enqueue_block_editor_assets', 'wpi_block_editor_styles');
-function wpi_block_editor_styles()
-{
-    $version = wp_get_theme()->get('Version');
-
-    wp_enqueue_style('wpi-block-editor-style', get_stylesheet_directory_uri() . '/assets/css/block-editor.css', [], $version);
-}
-
 add_action('init', 'wpi_menus');
 function wpi_menus()
 {
@@ -76,7 +68,7 @@ function wpi_custom_query($query)
         return;
     }
 
-    if ($query->is_post_type_archive(['website'])) {
+    if ($query->is_post_type_archive(['website', 'plugin', 'theme'])) {
         $_GET['orderby'] = strtolower(wp_unslash($_GET['orderby'] ?? ''));
         if (strpos($_GET['orderby'], '_') === false) {
             $_GET['orderby'] = 'update_d';
@@ -93,33 +85,6 @@ function wpi_custom_query($query)
                 break;
             case 'create':
                 $query->set('orderby', 'ID');
-                break;
-        }
-        switch ($order) {
-            case 'a':
-                $query->set('order', 'ASC');
-                break;
-            case 'd':
-                $query->set('order', 'DESC');
-                break;
-        }
-    }
-
-    if ($query->is_post_type_archive(['plugin', 'theme'])) {
-        $_GET['orderby'] = isset($_GET['orderby']) ? $_GET['orderby'] : '';
-        $_GET['orderby'] = strtolower(wp_unslash($_GET['orderby']));
-        if (strpos($_GET['orderby'], '_') === false) {
-            $_GET['orderby'] = 'count_d';
-        }
-        list($orderby, $order) = explode('_', $_GET['orderby']);
-
-        switch ($orderby) {
-            case 'name':
-                $query->set('orderby', 'title');
-                break;
-            case 'count':
-                $query->set('meta_key', 'used_count');
-                $query->set('orderby', 'meta_value_num');
                 break;
         }
         switch ($order) {

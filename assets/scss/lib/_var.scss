@@ -1,28 +1,14 @@
-@function nice-rem($size) {
-    $remSize: round($size * $basic-font-size) / ($basic-font-size);
-    @return #{$remSize}rem;
-}
-
-@mixin pad-style() {
-    @media (min-width: 769px) {
-        @content;
-    }
-}
-
-@mixin pc-style() {
-    @media (min-width: 1400px) {
-        @content;
-    }
-}
-
 $basic-font-size: 17px;
 $basic-font-weight: 400;
 $basic-line-height: 1.6;
 
-$basic-border-radius: nice-rem(.25);
+$basic-border-radius: nice-px(.25);
 
-$input-padding-x: nice-rem(.35);
-$input-padding-y: nice-rem(.65);
+$input-padding-x: nice-px(.35);
+$input-padding-y: nice-px(.65);
+
+$grid-space: 15px;
+$grid-col-em: 2, 4, 9;
 
 $colors: (
     word: #24292e,

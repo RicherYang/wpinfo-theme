@@ -1,20 +1,14 @@
-<?php
-
-get_header();
-?>
+<?php get_header(); ?>
 
 <main id="site-content">
-    <h2>
-        網站分類【<?php single_tag_title() ?>】
-    </h2>
-
-    <h2>網站</h2>
     <?php
+    get_template_part('template-parts/header/' . get_post_type());
     while (have_posts()) {
         the_post();
 
         get_template_part('template-parts/loop/' . get_post_type());
     }
+    get_template_part('template-parts/pagination');
     ?>
 </main>
 

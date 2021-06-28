@@ -16,10 +16,12 @@ get_header();
             while ($post_query->have_posts()) {
                 $post_query->the_post();
 
-                get_template_part('template-parts/loop', 'website');
+                get_template_part('template-parts/loop/website');
             }
             ?>
         </div>
+        <?php
+        /*
         <div class="col">
             <h2>熱門佈景主題</h2>
             <?php
@@ -34,7 +36,7 @@ get_header();
             while ($post_query->have_posts()) {
                 $post_query->the_post();
 
-                get_template_part('template-parts/loop', 'theme');
+                get_template_part('template-parts/loop/theme');
             }
             ?>
         </div>
@@ -52,10 +54,12 @@ get_header();
             while ($post_query->have_posts()) {
                 $post_query->the_post();
 
-                get_template_part('template-parts/loop', 'plugin');
+                get_template_part('template-parts/loop/plugin');
             }
             ?>
         </div>
+        */
+        ?>
     </div>
 </main>
 
