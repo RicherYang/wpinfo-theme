@@ -7,6 +7,7 @@
 <p class="order-list">
     排序：
     <?php the_orderby_list($basic_url, [
-        'name' => '名稱'
+        'name' => '名稱',
+        'update' => '更新時間',
     ]); ?>
 </p>

@@ -25,7 +25,7 @@ $total_count = wp_count_posts($post_type);
 
         <?php if ($url) { ?>
         <div class="row">
-            <div class="col-2em">官網</div>
+            <div class="col-3em">官網</div>
             <div class="col">
                 <a href="<?=esc_url($url) ?>" rel="external nofollow ugc noopener" target="_blank"><?=$url ?></a>
             </div>
@@ -34,12 +34,19 @@ $total_count = wp_count_posts($post_type);
 
         <?php if (has_tag()) { ?>
         <div class="row">
-            <div class="col-2em">標籤</div>
+            <div class="col-3em">標籤</div>
             <div class="col">
                 <?php the_tags('', ' , '); ?>
             </div>
         </div>
         <?php } ?>
+
+        <div class="row">
+            <div class="col-3em">使用數</div>
+            <div class="col">
+                <?php echo get_field('used_count'); ?>
+            </div>
+        </div>
     </div>
 
     <footer>
