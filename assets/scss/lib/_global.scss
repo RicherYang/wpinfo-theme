@@ -61,6 +61,10 @@ a {
         max-width: 80vw;
         margin: 0 auto;
     }
+
+    article {
+        margin-bottom: nice-px(1);
+    }
 }
 
 .d-none {

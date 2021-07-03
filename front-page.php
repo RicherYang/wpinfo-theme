@@ -20,8 +20,7 @@ get_header();
             }
             ?>
         </div>
-        <?php
-        /*
+
         <div class="col">
             <h2>熱門佈景主題</h2>
             <?php
@@ -40,6 +39,7 @@ get_header();
             }
             ?>
         </div>
+
         <div class="col">
             <h2>熱門外掛</h2>
             <?php
@@ -58,8 +58,6 @@ get_header();
             }
             ?>
         </div>
-        */
-        ?>
     </div>
 </main>
 

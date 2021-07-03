@@ -8,6 +8,7 @@
     排序：
     <?php the_orderby_list($basic_url, [
         'name' => '名稱',
+        'count' => '使用數',
         'update' => '更新時間',
     ]); ?>
 </p>

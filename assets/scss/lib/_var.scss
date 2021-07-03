@@ -2,13 +2,13 @@ $basic-font-size: 17px;
 $basic-font-weight: 400;
 $basic-line-height: 1.6;
 
-$basic-border-radius: nice-px(.25);
+$basic-border-radius: 5px;
 
-$input-padding-x: nice-px(.35);
-$input-padding-y: nice-px(.65);
+$input-padding-x: nice-px(.25);
+$input-padding-y: nice-px(.5);
 
-$grid-space: 15px;
-$grid-col-em: 3, 4, 9;
+$grid-space: 9px;
+$grid-col-em: 4, 9;
 
 $colors: (
     word: #24292e,

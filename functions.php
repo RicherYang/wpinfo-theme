@@ -16,7 +16,8 @@ add_action('wp_enqueue_scripts', 'wpi_register_styles');
 function wpi_register_styles()
 {
     $version = wp_get_theme()->get('Version');
-    wp_enqueue_style('wpi-style', get_stylesheet_directory_uri() . '/assets/css/main.css', [], $version);
+    wp_register_style('fortawesome', 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css', [], null);
+    wp_enqueue_style('wpi-style', get_stylesheet_directory_uri() . '/assets/css/main.css', ['fortawesome'], $version);
 
     wp_deregister_script('jquery');
     wp_register_script('jquery', 'https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js', [], null, true);
@@ -60,40 +61,44 @@ function wpi_custom_query($query)
     if ($query->is_tag()) {
         $query->set('post_type', ['plugin', 'theme']);
         $query->set('posts_per_page', -1);
-        return;
-    }
-
-    if ($query->is_search()) {
+    } elseif ($query->is_search()) {
         $query->set('posts_per_page', 1);
-        return;
+    } else {
+        if ($query->is_post_type_archive(['website', 'plugin', 'theme'])) {
+            $_GET['orderby'] = strtolower(wp_unslash($_GET['orderby'] ?? ''));
+            if (strpos($_GET['orderby'], '_') === false) {
+                $_GET['orderby'] = 'update_d';
+            }
+
+            list($orderby, $order) = explode('_', $_GET['orderby']);
+
+            switch ($orderby) {
+                case 'update':
+                    $query->set('orderby', 'modified');
+                    break;
+                case 'name':
+                    $query->set('orderby', 'title');
+                    break;
+                case 'create':
+                    $query->set('orderby', 'ID');
+                    break;
+                case 'count':
+                    $query->set('meta_key', 'used_count');
+                    $query->set('orderby', 'meta_value_num');
+                    break;
+            }
+            switch ($order) {
+                case 'a':
+                    $query->set('order', 'ASC');
+                    break;
+                case 'd':
+                    $query->set('order', 'DESC');
+                    break;
+            }
+        }
     }
 
-    if ($query->is_post_type_archive(['website', 'plugin', 'theme'])) {
-        $_GET['orderby'] = strtolower(wp_unslash($_GET['orderby'] ?? ''));
-        if (strpos($_GET['orderby'], '_') === false) {
-            $_GET['orderby'] = 'update_d';
-        }
-
-        list($orderby, $order) = explode('_', $_GET['orderby']);
-
-        switch ($orderby) {
-            case 'update':
-                $query->set('orderby', 'modified');
-                break;
-            case 'name':
-                $query->set('orderby', 'title');
-                break;
-            case 'create':
-                $query->set('orderby', 'ID');
-                break;
-        }
-        switch ($order) {
-            case 'a':
-                $query->set('order', 'ASC');
-                break;
-            case 'd':
-                $query->set('order', 'DESC');
-                break;
-        }
+    if ($query->get('orderby') == '') {
+        $query->set('orderby', 'modified');
     }
 }

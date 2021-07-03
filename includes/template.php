@@ -29,11 +29,17 @@ function the_orderby_list($basic_url, $order_list)
     foreach ($order_list as $key => $name) {
         $active = $get_orderby == $key;
 
-        $url_order = $active ? ($get_order == 'd' ? '_a' : '_d') : '_d';
+        if ($active) {
+            $url_order = $get_order == 'd' ? '_a' : '_d';
+            $name .= ($get_order == 'd' ? '<i class="fas fa-sort-down"></i>' : '<i class="fas fa-sort-up"></i>');
+        } else {
+            $url_order = '_d';
+            $name .= '<i class="fas fa-sort"></i>';
+        }
         printf(
             '<a href="%1$s" class="%2$s">%3$s</a>',
             esc_url(add_query_arg(['orderby' => $key . $url_order], $basic_url)),
-            $active ? 'active ' . ($get_order == 'd' ? 'order-desc' : 'order-asc') : '',
+            $active ? 'active ' : '',
             $name
         );
     }
