@@ -3,7 +3,7 @@ $url = get_field('url', false);
 $total_count = wp_count_posts('theme');
 ?>
 
-<article <?php post_class(); ?>>
+<article <?php post_easy_class(); ?>>
     <header>
         <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
     </header>

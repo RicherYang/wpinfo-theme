@@ -6,12 +6,13 @@ get_header();
 <main id="site-content">
     <div class="row">
         <div class="col">
-            <h2>新網站</h2>
+            <h2>隨選網站</h2>
             <?php
             $post_query->query([
                 'post_type' => 'website',
                 'post_status' => 'publish',
-                'posts_per_page' => get_option('posts_per_page')
+                'posts_per_page' => get_option('posts_per_page'),
+                'orderby' => 'rand'
             ]);
             while ($post_query->have_posts()) {
                 $post_query->the_post();

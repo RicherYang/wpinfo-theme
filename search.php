@@ -1,13 +1,15 @@
 <?php
 $query = new WP_Query;
-$content_args = [
+$item_list = [];
+$item_list = array_merge($item_list, $query->query([
     's' => get_search_query(),
+    'post_type' => ['website', 'plugin', 'theme'],
     'post_status' => 'publish',
     'orderby' => 'none',
     'posts_per_page' => -1,
     'fields' => 'ids'
-];
-$url_args = [
+]));
+$item_list = array_merge($item_list, $query->query([
     'meta_query' => [
         [
             'key' => 'url',
@@ -15,16 +17,14 @@ $url_args = [
             'compare' => 'LIKE'
         ]
     ],
+    'post_type' => ['website', 'plugin', 'theme'],
     'post_status' => 'publish',
     'orderby' => 'none',
     'posts_per_page' => -1,
     'fields' => 'ids'
-];
-$real_args = [
-    'post_status' => 'publish',
-    'orderby' => 'rand',
-    'posts_per_page' => -1
-];
+]));
+$item_list = array_unique($item_list);
+
 $show_list = [
     'website' => '網站',
     'plugin' => '外掛',
@@ -40,18 +40,14 @@ get_header();
     <div class="row">
         <?php
         foreach ($show_list as $type => $name) {
-            $content_args['post_type'] = $type;
-            $url_args['post_type'] = $type;
-            $real_args['post_type'] = $type;
-
-            $ids = array_merge($query->query($content_args), $query->query($url_args));
-            $real_args['post__in'] = array_unique($ids);
-            if (count($real_args['post__in']) == 0) {
-                continue;
-            }
-            $query->query($real_args);
-            if ($query->have_posts()) {
-                ?>
+            $query->query([
+                'post_type' => $type,
+                'post__in' => $item_list,
+                'post_status' => 'publish',
+                'orderby' => 'rand',
+                'posts_per_page' => -1,
+            ]);
+            if ($query->have_posts()) { ?>
         <div class="col">
             <h2>
                 <?=$name ?>

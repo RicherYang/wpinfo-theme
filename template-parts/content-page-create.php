@@ -2,7 +2,7 @@
 wp_enqueue_script('wpi-add');
 ?>
 
-<article <?php post_class(); ?>>
+<article <?php post_easy_class(); ?>>
     <fieldset id="add_form">
         <label for="url">WordPress 網址</label>
         <div class="input-box">
